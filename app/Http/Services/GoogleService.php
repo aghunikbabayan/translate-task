@@ -2,13 +2,20 @@
 
 namespace App\Http\Services;
 
-use Google\Cloud\Translate\TranslateClient;
+use Google\Cloud\Translate\V2\TranslateClient;
 use Stichoza\GoogleTranslate\GoogleTranslate;
 use App\Http\Contracts\Services\GoogleServices as Contract;
 
 class GoogleService implements Contract
 {
+    /**
+     * @var TranslateClient $clientTranslate
+     */
     protected $clientTranslate;
+
+    /**
+     * @var string[] $codes Allowed translation codes
+     */
     protected $codes = [
         'af', 'sq', 'am', 'ar', 'hy', 'az', 'eu', 'be', 'bn', 'bs', 'bg', 'ca', 'ceb', 'zh-CN', 'zh', 'zh-TW', 'co', 'hr', 'cs', 'da', 'nl', 'en', 'eo', 'et', 'fi', 'fr', 'fy', 'gl', 'ka', 'de', 'el',
         'gu', 'ht', 'ha', 'haw', 'he', 'iw', 'hi', 'hmn', 'hu', 'is', 'ig', 'id', 'ga', 'it', 'ja', 'jv', 'kn', 'kk', 'km', 'rw', 'ko', 'ku', 'ky', 'lo', 'la', 'lv', 'lt', 'lb', 'mk', 'mg', 'ms', 'ml',
@@ -33,7 +40,7 @@ class GoogleService implements Contract
      * @param string $language
      * @return array
      */
-    public function translateTxtWithApi($text, $language): array
+    public function translateTxtWithApi(string $text, string $language): array
     {
         $isValidLang = $this->isValidLang($language);
         if (!$isValidLang) {
@@ -63,7 +70,7 @@ class GoogleService implements Contract
      * @param string $language
      * @return array
      */
-    public function translateTxtWithScript($text, $language): array
+    public function translateTxtWithScript(string $text, string $language): array
     {
         $isValidLang = $this->isValidLang($language);
         if (!$isValidLang) {
